@@ -110,7 +110,7 @@ export function useLastFountId({ prefix }) {
 }
 ```
 
-The hook `useAtomValue` is the same as in jotai, but using a string to refer to the atom: `const counter = useAtomValue("counter")`;
+The hook `useAtomValue` is the same as in jotai, but using a string to refer to the atom (you can also pass an atom if you wish): `const counter = useAtomValue("counter")`;
 
 The `getAtom` function returns the atom which the string refers to: `const counterAtom = getAtom("counter");`
 
@@ -118,7 +118,7 @@ Finally, the `selectAtom` function you use it like this:
 
 ```javascript
 // todos.js
-import { selectAtom } from "./atoms";
+import { selectAtom, useAtomValue } from "./atoms";
 import { useMemo } from "react";
 
 export default function Todos({ index, id }) {
