@@ -138,4 +138,26 @@ As you can see from the source code shown, this function (`selectAtom`) from jot
 
 ## Edge cases
 
-As you can see from the source code, when calling any of the hooks with a key (string) that doesn't exist or with `null` or `undefined`, it uses a fallback atom defined in the library. The same for the `getAtom` function.
+As you can see from the source code, when calling any of the hooks with a key (string) that doesn't exist or with `null` or `undefined`, it uses a fallback atom defined in the library. The same for the `getAtom` and `selectAtom` functions (the second one depends on the first).
+
+So the next component will render `11` when called:
+
+```javascript
+import { useAtomValue, getAtom } from "./atoms";
+
+export default function Edge() {
+  const value1 = useAtomValue();
+  const value2 = useAtomValue(null);
+  const value3 = useAtomValue("");
+  const atom1 = getAtom();
+  const atom2 = getAtom(null);
+  const atom3 = getAtom("");
+
+  return (
+    <>
+      {value1 === value2 && value2 === value3 && 1}
+      {atom1 === atom2 && atom2 === atom3 && 1}
+    </>
+  );
+}
+```
