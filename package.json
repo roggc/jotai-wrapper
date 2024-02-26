@@ -15,8 +15,5 @@
   "license": "ISC",
   "dependencies": {
     "jotai": "^2.6.5"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0"
   }
 }

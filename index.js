@@ -4,7 +4,8 @@ import {
   useAtomValue as jotaiUseAtomValue,
   useSetAtom as jotaiUseSetAtom,
 } from "jotai";
-import { useMemo } from "react";
+
+const fallbackAtom = atom();
 
 export default function getAPIFromAtoms(atoms) {
   const atomsEntries = Object.entries(atoms);
@@ -15,12 +16,9 @@ export default function getAPIFromAtoms(atoms) {
       if (atomEntry) {
         return jotaiHook(atomEntry[1]);
       }
-      return jotaiHook(useMemo(() => atom(), []));
+      return jotaiHook(fallbackAtom);
     }
-    if (typeof atomInput === "undefined") {
-      return jotaiHook(useMemo(() => atom(), []));
-    }
-    return jotaiHook(atomInput);
+    return jotaiHook(atomInput ?? fallbackAtom);
   }
 
   function useAtom(atom) {
@@ -40,7 +38,7 @@ export default function getAPIFromAtoms(atoms) {
     if (atomEntry) {
       return atomEntry[1];
     }
-    return atom();
+    return fallbackAtom;
   }
 
   const selectAtom = (atomName, selector) => {

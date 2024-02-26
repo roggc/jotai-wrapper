@@ -16,7 +16,8 @@ import {
   useAtomValue as jotaiUseAtomValue,
   useSetAtom as jotaiUseSetAtom,
 } from "jotai";
-import { useMemo } from "react";
+
+const fallbackAtom = atom();
 
 export default function getAPIFromAtoms(atoms) {
   const atomsEntries = Object.entries(atoms);
@@ -27,12 +28,9 @@ export default function getAPIFromAtoms(atoms) {
       if (atomEntry) {
         return jotaiHook(atomEntry[1]);
       }
-      return jotaiHook(useMemo(() => atom(), []));
+      return jotaiHook(fallbackAtom);
     }
-    if (typeof atomInput === "undefined") {
-      return jotaiHook(useMemo(() => atom(), []));
-    }
-    return jotaiHook(atomInput);
+    return jotaiHook(atomInput ?? fallbackAtom);
   }
 
   function useAtom(atom) {
@@ -52,7 +50,7 @@ export default function getAPIFromAtoms(atoms) {
     if (atomEntry) {
       return atomEntry[1];
     }
-    return atom();
+    return fallbackAtom;
   }
 
   const selectAtom = (atomName, selector) => {
@@ -137,3 +135,7 @@ export default function Todos({ index, id }) {
 ```
 
 As you can see from the source code shown, this function (`selectAtom`) from jotai-wrapper it's different than the `selectAtom` from jotai. So if you want to use the `selectAtom` from jotai, you must do `import {selectAtom} from "jotai/utils"`.
+
+## Edge cases
+
+As you can see from the source code, when calling any of the hooks with a key (string) that doesn't exist or with `null` or `undefined`, it uses a fallback atom defined in the library. The same for the `getAtom` function.
