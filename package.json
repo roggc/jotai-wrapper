@@ -1,0 +1,22 @@
+{
+  "name": "jotai-wrapper",
+  "version": "1.0.0",
+  "description": "a wrapper for jotai library",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jotai",
+    "react"
+  ],
+  "author": "roggc (roger gomez castells)",
+  "license": "ISC",
+  "dependencies": {
+    "jotai": "^2.6.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  }
+}
